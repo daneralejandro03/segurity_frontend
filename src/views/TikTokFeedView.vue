@@ -1,15 +1,36 @@
 <template>
   <v-layout class="tiktok-feed">
+    <!-- Mobile Header with Hamburger Menu -->
+    <v-app-bar
+      v-if="$vuetify.display.smAndDown"
+      color="black"
+      density="compact"
+      class="mobile-header"
+    >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-spacer></v-spacer>
+      <div class="logo-container">
+        <img
+          src="/tiktok-logo.svg"
+          alt="TikTok"
+          height="32"
+          class="tiktok-logo"
+        />
+      </div>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
     <!-- Sidebar -->
     <v-navigation-drawer
-      permanent
+      v-model="drawer"
+      :permanent="!$vuetify.display.smAndDown"
+      :temporary="$vuetify.display.smAndDown"
       location="left"
       class="sidebar"
       width="240"
-      :rail="$vuetify.display.smAndDown"
     >
-      <!-- Logo -->
-      <div class="flex items-center justify-center px-4 py-3">
+      <!-- Logo (hidden on mobile) -->
+      <div class="logo-container py-4" v-if="!$vuetify.display.smAndDown">
         <img
           src="/tiktok-logo.svg"
           alt="TikTok"
@@ -20,7 +41,6 @@
 
       <!-- Search Bar -->
       <v-text-field
-        v-show="!$vuetify.display.smAndDown"
         prepend-inner-icon="mdi-magnify"
         placeholder="Buscar"
         variant="solo-filled"
@@ -55,7 +75,7 @@
       <v-divider class="my-2"></v-divider>
 
       <!-- Login Section -->
-      <div class="px-4 py-3 login-section" v-if="!$vuetify.display.smAndDown">
+      <div class="px-4 py-3 login-section">
         <p class="text-body-2 text-grey mb-2">
           Inicia sesión para seguir a creadores, dar me gusta a videos y ver
           comentarios.
@@ -66,10 +86,7 @@
       </div>
 
       <!-- Footer Links -->
-      <div
-        class="footer-links px-4 mt-auto pb-4"
-        v-if="!$vuetify.display.smAndDown"
-      >
+      <div class="footer-links px-4 mt-auto pb-4">
         <div class="text-caption text-grey d-flex flex-wrap gap-2">
           <a
             href="#"
@@ -128,6 +145,7 @@ import { useVideoStore } from "@/stores/videoStore";
 import { useDisplay } from "vuetify";
 
 const loading = ref(false);
+const drawer = ref(true);
 const videoStore = useVideoStore();
 const activeItem = ref("for-you");
 
@@ -178,6 +196,8 @@ async function refreshFeed() {
 }
 
 onMounted(() => {
+  // Set initial drawer state based on screen size
+  drawer.value = !useDisplay().smAndDown.value;
   requestLocation();
   videoStore.fetchVideos();
 });
@@ -188,11 +208,32 @@ onMounted(() => {
   background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
 }
 
+.mobile-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+
+  .logo-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .sidebar {
   background: #000000 !important;
   border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
   display: flex;
   flex-direction: column;
+}
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tiktok-logo {
@@ -310,10 +351,6 @@ onMounted(() => {
   .refresh-button {
     bottom: 16px;
     right: 16px;
-  }
-
-  .sidebar {
-    width: 72px !important;
   }
 }
 </style>
