@@ -28,7 +28,6 @@ export async function getTikTokEmbed(videoUrl: string): Promise<{
     });
     // Devuelve todos los campos de la respuesta
 
-    console.log("Embed para", videoUrl, response.data);
     return {
       version: response.data.version,
       type: response.data.type,
@@ -104,8 +103,6 @@ export async function getVideos(): Promise<Video[]> {
       }
     })
   );
-
-  console.log("Videos cargados:", videos);
 
   return videos;
 }

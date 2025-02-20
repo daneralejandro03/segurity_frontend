@@ -32,7 +32,6 @@ export const sendLocationData = async (
         agent,
       },
     });
-    console.log("Datos enviados correctamente:", response.data);
   } catch (error) {
     console.error("Error al enviar los datos:", error);
   }
