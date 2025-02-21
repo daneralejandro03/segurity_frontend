@@ -54,11 +54,18 @@ export async function getTikTokEmbed(videoUrl: string): Promise<{
  */
 export async function getVideos(): Promise<Video[]> {
   const videoUrls = [
+    "https://www.tiktok.com/@loveeeeeeeeeeez/video/7416593431050374407",
+    "https://www.tiktok.com/@frankia.navarro/video/7410271820613455110",
+    "https://www.tiktok.com/@deeploveconnections/photo/7414613786331565345",
+    "https://www.tiktok.com/@abbcc2hh/video/7409034104672505119",
     "https://www.tiktok.com/@isbaefeelings/video/7472571577033297154",
     "https://www.tiktok.com/@scout2015/video/7472163458079886622",
+    "https://www.tiktok.com/@paradedicarselx/photo/7417124810452438278",
+    "https://www.tiktok.com/@asamimichaann/video/7395170921432091922",
     "https://www.tiktok.com/@onlooooop/video/7471797461451918614",
     "https://www.tiktok.com/@yen.kat/video/7471486666104900870",
     "https://www.tiktok.com/@oye_kenedy/video/7471402415045070088",
+    "https://www.tiktok.com/@khaleesiisaa/video/7417099791756217633",
     "https://www.tiktok.com/@antoniaangel5/video/7470630442471820599",
     "https://www.tiktok.com/@mariaclaudiaql/video/7471807196397948166",
   ];
