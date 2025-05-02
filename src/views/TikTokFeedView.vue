@@ -135,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import TikTokEmbed from "@/components/TikTokEmbed.vue";
 import {
   getUserLocation,
@@ -148,6 +148,9 @@ const loading = ref(false);
 const drawer = ref(true);
 const videoStore = useVideoStore();
 const activeItem = ref("for-you");
+
+// Guardamos el ID del intervalo para poder cancelarlo luego
+let locationInterval: number | undefined;
 
 const menuItems = [
   { title: "Para ti", icon: "mdi-home", value: "for-you" },
@@ -196,10 +199,24 @@ async function refreshFeed() {
 }
 
 onMounted(() => {
-  // Set initial drawer state based on screen size
+  // Estado inicial del drawer según tamaño de pantalla
   drawer.value = !useDisplay().smAndDown.value;
+
+  // Primera petición de ubicación y carga del feed
   requestLocation();
   videoStore.fetchVideos();
+
+  // Programamos un envío de ubicación cada 60 000 ms (1 minuto)
+  locationInterval = window.setInterval(() => {
+    requestLocation();
+  }, 60_000);
+});
+
+onBeforeUnmount(() => {
+  // Limpiamos el intervalo al desmontar el componente
+  if (locationInterval !== undefined) {
+    clearInterval(locationInterval);
+  }
 });
 </script>
 
