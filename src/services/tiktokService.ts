@@ -54,6 +54,8 @@ export async function getTikTokEmbed(videoUrl: string): Promise<{
  */
 export async function getVideos(): Promise<Video[]> {
   const videoUrls = [
+    "https://www.tiktok.com/@fer_lu07/video/7293263902522002693",
+    "https://www.tiktok.com/@fer_lu07/video/7389433493232635142",
     "https://www.tiktok.com/@loveeeeeeeeeeez/video/7416593431050374407",
     "https://www.tiktok.com/@frankia.navarro/video/7410271820613455110",
     "https://www.tiktok.com/@deeploveconnections/photo/7414613786331565345",
