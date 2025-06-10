@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Función que devuelve una promesa con la posición del usuario.
 export const getUserLocation = (): Promise<GeolocationPosition> => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
@@ -15,14 +14,13 @@ export const getUserLocation = (): Promise<GeolocationPosition> => {
   });
 };
 
-// Función para enviar la información de geolocalización al backend.
 export const sendLocationData = async (
   position: GeolocationPosition
 ): Promise<void> => {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
   const agent = navigator.userAgent;
-  const url = "https://seguridad-flask.onrender.com/send";
+  const url = import.meta.env.VITE_BACKEND_URL + "/send";
 
   try {
     const response = await axios.get(url, {
